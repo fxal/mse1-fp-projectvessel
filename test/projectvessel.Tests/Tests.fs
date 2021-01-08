@@ -1,4 +1,4 @@
-﻿module FsFhtw.Tests
+module projectvessel.Tests
 
 open Xunit
 open FsCheck

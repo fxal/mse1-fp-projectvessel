@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\FsFhtw\projectvessel.fsproj" />
+    <ProjectReference Include="..\..\src\projectvessel\projectvessel.fsproj" />
   </ItemGroup>
 
   <ItemGroup>
