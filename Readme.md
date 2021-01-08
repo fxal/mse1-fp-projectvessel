@@ -1,4 +1,4 @@
-# Project Vessel
+# Project Vessel 🚀
 
 > Template from https://github.com/haraldsteinlechner/FsFhtw for Functional Programming in MSE1 at FH Technikum Wien
 
