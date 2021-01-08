@@ -2,6 +2,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>projectvessel</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Domain.fs" />
