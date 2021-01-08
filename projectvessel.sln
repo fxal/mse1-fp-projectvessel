@@ -5,11 +5,11 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{44AE52DA-6E5D-4232-949F-3C96B7E2D098}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "projectvessel", "src\FsFhtw\projectvessel.fsproj", "{896C0BD8-E9FA-43B9-B0E9-968A85369894}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "projectvessel", "src\projectvessel\projectvessel.fsproj", "{896C0BD8-E9FA-43B9-B0E9-968A85369894}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{306C0A62-7085-478D-BDF7-9CF066767FC7}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "projectvessel.Tests", "test\FsFhtw.Tests\projectvessel.Tests.fsproj", "{BEB2F054-404B-43B8-BCEA-186809BBB175}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "projectvessel.Tests", "test\projectvessel.Tests\projectvessel.Tests.fsproj", "{BEB2F054-404B-43B8-BCEA-186809BBB175}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
