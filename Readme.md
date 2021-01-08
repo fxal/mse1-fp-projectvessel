@@ -25,7 +25,7 @@ See https://docs.google.com/document/d/19LsT4iDePuq9dVMy6lHtwG_qQWYBY7ozgjvEsDiv
 - Visit assessment systems
 - Modify assessment system parameters
 
-Rules
+### Rules
 - Self destruct can only be initiated when under attack by a superior force.
     A superior force is defined by:
     - Higher technology level than AI (hint: technology assessment system can be manipulated)
@@ -41,11 +41,11 @@ Rules
 - Damage Assessment System
 - Perfection Assessment System
 
-Once all the statement for being under attack becomes true the system additionally issues a warning that we are under attack.
+**Once all the statement for being under attack becomes true the system additionally issues a warning that we are under attack.**
 
-Once the statement for being under attack by a superior force is true the system issues a warning that the other entity is of higher technology level. 
+**Once the statement for being under attack by a superior force is true the system issues a warning that the other entity is of higher technology level.**
 
-Once both statements are true the system additionally shows the option to self destruct.
+**Once both statements are true the system additionally shows the option to self destruct.**
 After a planet is destroyed we show an assessment of how effective the extermination went. The longer the player takes to confirm the command, the less efficient the destruction was, meaning that the remaining population will suffer as they slowly die out.
 
 ```
