@@ -61,7 +61,7 @@ Data (per Planet) = {
 State: 
 - KSR = number
 - DamageDetected = boolean
-- CurrentRoom = TECHAS | TAS | DAS | PAS | AtPlanet | Hyperspace
+- CurrentRoom = TECHAS | TAS | DAS | PAS | AtPlanet | Hyperspace | VictoryRoom
 - EradicatedPlanets = number
 
 
