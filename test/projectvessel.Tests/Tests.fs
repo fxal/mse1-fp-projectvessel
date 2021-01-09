@@ -2,6 +2,7 @@ module projectvessel.Tests
 
 open Xunit
 open FsCheck
+open CsvReader
 
 [<Fact>]
 let ``That the laws of reality still apply`` () =
@@ -41,3 +42,16 @@ let ``That applying the inverse of counter event yields the initial state`` () =
         actual = initialState
 
     Check.QuickThrowOnFailure prop
+
+[<Fact>]
+let ``That reading the testing csv file yields a csv with one data row`` () =
+    let csv = csvloader.Load("../../../../../data/i18n_test.csv")
+
+    let testi18n = csv.Rows |> Seq.map(fun row -> row.Key, row.Value) |> Map.ofSeq
+    Assert.Equal("testcontent", testi18n.["testname"])
+ 
+    for row in csv.Filter(fun row -> row.Key = "testname").Rows do
+        Assert.Equal("testname", row.Key)
+        Assert.Equal("testcontent", row.Value)
+
+    Assert.Equal(2, csv.NumberOfColumns) 

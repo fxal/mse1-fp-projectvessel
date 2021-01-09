@@ -8,6 +8,10 @@
     <Compile Include="Domain.fs" />
     <Compile Include="Parser.fs" />
     <Compile Include="Repl.fs" />
+    <Compile Include="CsvReader.fs" />
     <Compile Include="Program.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="FSharp.Data" Version="3.3.3" />
   </ItemGroup>
 </Project>
