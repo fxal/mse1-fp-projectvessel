@@ -8,6 +8,7 @@ open CsvReader
 let ``That the laws of reality still apply`` () =
     Assert.True(1 = 1)
 
+(*
 [<Fact>]
 let ``That incrementing twice on an initialized counter yields 2`` () =
     let initialState = Domain.init ()
@@ -28,6 +29,8 @@ let getInverse (message : Domain.Message) =
     | Domain.Decrement -> Domain.Increment
     | Domain.IncrementBy x -> Domain.DecrementBy x
     | Domain.DecrementBy x -> Domain.IncrementBy x
+    
+
 
 [<Fact>]
 let ``That applying the inverse of counter event yields the initial state`` () =
@@ -42,6 +45,8 @@ let ``That applying the inverse of counter event yields the initial state`` () =
         actual = initialState
 
     Check.QuickThrowOnFailure prop
+    
+*)
 
 [<Fact>]
 let ``That reading the testing csv file yields a csv with one data row`` () =

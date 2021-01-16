@@ -1,19 +1,58 @@
 module Domain
 
-type State = int
+type Planet =
+    { Name: string
+      PopulationName: string
+      PopulationCount: int
+      KSRLevel: int
+      Description: string }
+
+type Room =
+    | Hyperspace
+    | AtPlanet
+    | VictoryRoom
+    | Assessment
+    | TechAss
+    | ThreadAss
+    | DamageAss
+    | PerfectionAss
+
+type State =
+    { KSRLevel: int
+      DamageThreshold: int
+      Offset: int
+      DamageDetected: bool
+      CurrRoom: Room
+      EradicatedPlanets: Planet List }
 
 type Message =
-    | Increment
-    | Decrement
-    | IncrementBy of int
-    | DecrementBy of int
+    | EradicatePlanet of Planet
+    | Visit of Room
+    | SelfDestruct
+    | LogOff
 
-let init () : State =
-    0
 
-let update (msg : Message) (model : State) : State =
+let init (): State =
+    { KSRLevel = 2
+      DamageThreshold = 10
+      Offset = 50
+      DamageDetected = false
+      CurrRoom = AtPlanet
+      EradicatedPlanets = [] }
+
+
+let update (msg: Message) (model: State): State =
     match msg with
-    | Increment -> model + 1
-    | Decrement -> model - 1
-    | IncrementBy x -> model + x
-    | DecrementBy x -> model - x
+    | EradicatePlanet planet ->
+        { model with
+              EradicatedPlanets = planet :: model.EradicatedPlanets
+              CurrRoom = Hyperspace }
+    | Visit ass ->
+        match ass with
+        | DamageAss -> { model with CurrRoom = DamageAss }
+        | PerfectionAss -> { model with CurrRoom = PerfectionAss }
+        | TechAss -> { model with CurrRoom = TechAss }
+        | ThreadAss -> { model with CurrRoom = ThreadAss }
+        | _ -> model
+    | SelfDestruct -> { model with CurrRoom = VictoryRoom } // TODO: implement check if allowed
+    | LogOff -> { model with CurrRoom = AtPlanet }
