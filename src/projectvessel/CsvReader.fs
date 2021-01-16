@@ -38,7 +38,7 @@ let private i18nWithMapAndParameters (i18nMap : Map<string, string>) (i18nkey : 
     match replacements with
     | [] -> value
     | r::replacements ->
-        reci18nWithParametersHelper (value.Replace("{0}", r)) replacements 0
+        reci18nWithParametersHelper (value.Replace("{0}", r)) replacements 1
 
 let i18nWithParameters (i18nMap : Map<string, string> option) (i18nkey : string) (replacements : string list) : string =
     match i18nMap with

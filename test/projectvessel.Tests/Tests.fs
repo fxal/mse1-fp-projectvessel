@@ -63,7 +63,7 @@ let ``That replacing multiple fields in csv i18n is possible`` () =
     Assert.Equal("this {0} is {1} a {2} test {3}", i18n.["testname"])
 
     let firstReplace = i18nWithParameters (Some i18n) "testname" ["dings"; "dangs"; "dungs"; "dongs"]
-    Assert.Equal("this dings is dungs a dongs test", firstReplace)
+    Assert.Equal("this dings is dangs a dungs test dongs", firstReplace)
 
-    //let noReplace = i18nNoParameters "testname"
-    //Assert.Equal("this {0} is {1} a {2} test {3}", noReplace)
+    let notFound = i18nWithParameters None "iWillNotFindAResult" []
+    Assert.Equal("No value found for key", notFound)
