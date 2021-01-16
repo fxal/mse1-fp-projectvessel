@@ -1,6 +1,7 @@
 module Repl
 
 open System
+open Domain
 open Parser
 
 type Message =
@@ -10,44 +11,64 @@ type Message =
 
 type State = Domain.State
 
-let read (input : string) =
+let testPlanet: Domain.Planet =
+    { Name = "Cononis"
+      PopulationName = "Canicuties"
+      PopulationCount = 399324
+      KSRLevel = 30
+      Description = "They are super intelligent" }
+
+let read (input: string) =
     match input with
-    | Increment -> Domain.Increment |> DomainMessage
-    | Decrement -> Domain.Decrement |> DomainMessage
-    | IncrementBy v -> Domain.IncrementBy v |> DomainMessage
-    | DecrementBy v -> Domain.DecrementBy v |> DomainMessage
+    | ConfirmEradication -> Domain.EradicatePlanet testPlanet |> DomainMessage
+    | SelfDestruct -> Domain.SelfDestruct |> DomainMessage
+    | Visit room -> Domain.Visit room |> DomainMessage
+    | LogOff -> Domain.LogOff |> DomainMessage
     | Help -> HelpRequested
-    | ParseFailed  -> NotParsable input
+    | ParseFailed -> NotParsable input
+
+
 
 open Microsoft.FSharp.Reflection
 
-let createHelpText () : string =
+// TODO: change (as not all commands should be listed)
+let createHelpText (): string =
     FSharpType.GetUnionCases typeof<Domain.Message>
     |> Array.map (fun case -> case.Name)
     |> Array.fold (fun prev curr -> prev + " " + curr) ""
     |> (fun s -> s.Trim() |> sprintf "Known commands are: %s")
 
-let evaluate (update : Domain.Message -> State -> State) (state : State) (msg : Message) =
+
+
+
+let evaluate (update: Domain.Message -> State -> State) (state: State) (msg: Message) =
     match msg with
     | DomainMessage msg ->
         let newState = update msg state
-        let message = sprintf "The message was %A. New state is %A" msg newState
+
+        let message =
+            sprintf "The message was %A. New state is %A" msg newState
+
         (newState, message)
     | HelpRequested ->
         let message = createHelpText ()
         (state, message)
     | NotParsable originalInput ->
         let message =
-            sprintf """"%s" was not parsable. %s"""  originalInput "You can get information about known commands by typing \"Help\""
+            sprintf
+                """"%s" was not parsable. %s"""
+                originalInput
+                "You can get information about known commands by typing \"Help\""
+
         (state, message)
 
-let print (state : State, outputToPrint : string) =
-    printfn "%s\n" outputToPrint
+let print (state: State, msg: string) =
+    printfn "%s\n" msg
     printf "> "
 
     state
 
-let rec loop (state : State) =
+let rec loop (state: State) =
     Console.ReadLine()
     |> read
     |> evaluate Domain.update state
