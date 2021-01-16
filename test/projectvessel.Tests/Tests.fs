@@ -55,3 +55,15 @@ let ``That reading the testing csv file yields a csv with one data row`` () =
         Assert.Equal("testcontent", row.Value)
 
     Assert.Equal(2, csv.NumberOfColumns) 
+
+[<Fact>]
+let ``That replacing multiple fields in csv i18n is possible`` () =
+    let csv = csvloader.Load("../../../../../data/i18n_test_replace.csv")
+    let i18n = csv.Rows |> Seq.map(fun row -> row.Key, row.Value) |> Map.ofSeq
+    Assert.Equal("this {0} is {1} a {2} test {3}", i18n.["testname"])
+
+    let firstReplace = i18nWithParameters (Some i18n) "testname" ["dings"; "dangs"; "dungs"; "dongs"]
+    Assert.Equal("this dings is dangs a dungs test dongs", firstReplace)
+
+    let notFound = i18nWithParameters None "iWillNotFindAResult" []
+    Assert.Equal("No value found for key", notFound)
