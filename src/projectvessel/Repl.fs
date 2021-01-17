@@ -49,8 +49,9 @@ let evaluate (update: Domain.Message -> State -> State) (state: State) (msg: Mes
         let newState = update msg state
 
         let message = match newState.CurrRoom with
-        | Hyperspace -> i18nNoParameters "planet.planet1.line1"
-        | _ -> sprintf "The message was %A. New state is %A" msg newState
+            | Hyperspace -> i18nNoParameters "planet.planet1.line1"
+            | AtPlanet -> i18nWithParameters None "planet.planet1.line2" ["181.236 cute puppies"]
+            | _ -> sprintf "The message was %A. New state is %A" msg newState
 
         (newState, message)
     | HelpRequested ->
