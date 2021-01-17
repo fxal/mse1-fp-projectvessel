@@ -72,3 +72,9 @@ let ``That replacing multiple fields in csv i18n is possible`` () =
 
     let notFound = i18nWithParameters None "iWillNotFindAResult" []
     Assert.Equal("No value found for key", notFound)
+
+[<Fact>]
+let ``That multiline csv for i18n purposes can be used`` () =
+    let csv = csvloader.Load("../../../../../data/i18n_test_multiline.csv")
+    let i18n = csv.Rows |> Seq.map(fun row -> row.Key, row.Value) |> Map.ofSeq
+    Assert.Equal("", i18n.["multilinekey"])

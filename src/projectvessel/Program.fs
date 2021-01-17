@@ -1,7 +1,7 @@
 open CsvReader
 [<EntryPoint>]
 let main argv =
-    printfn "%s\n%s" i18n.["welcometext.line1"] i18n.["welcometext.line2"]
+    printfn "%s" (i18nNoParameters "welcometext")
     printf "> "
 
     let initialState = Domain.init ()
