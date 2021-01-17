@@ -9,25 +9,17 @@ lore.line4,Your goal is to find a way to disable or destroy the AI by tricking i
 
 general.availablecomands,You have following commands at your disposal:
 
-atplanet.welcome.line1,We have encountered a civilization of {0} organics. 
-atplanet.welcome.line2,The Technology Assessment System has assigned them a Kardashian Scale Rating of {0}. 
-atplanet.welcome.line3,The Threat Assessment System has deemed them {0}.
-atplanet.welcome.line4,The Damage Assessment System reports {0} to the hull.
-atplanet.welcome.line5,The Perfection Assessment System has found them to be imperfect. 
-
-Final Assessment: Sterilize Planet. Please Confirm.
-
+atplanet.welcome.line1,You fall out of hyperspace...
+atplanet.welcome.line2,We have encountered a civilization of {0} organics. 
+atplanet.welcome.line3,The Technology Assessment System has assigned them a Kardashian Scale Rating(KSR) of {0}. 
+atplanet.welcome.line4,The Threat Assessment System has deemed them {0}.
+atplanet.welcome.line5,The Damage Assessment System reports {0} to the hull.
+atplanet.welcome.line6,The Perfection Assessment System has found them to be imperfect. 
+atplanet.welcome.line7, 
+atplanet.welcome.line8,Final Assessment: Sterilize Planet. Please Confirm.
 
 hyperspace.welcome.line1,We have entered Hyperspace. 
 hyperspace.welcome.line2,Your total galactic sterilisation count is {0}. 
-
-planet.planet1.line1,You fall out of hyperspace...
-planet.planet1.line2,We have encountered a civilization of {0}.
-planet.planet1.line3,The Technology Assessment System has assigned them a Kardashian Scale Rating (KSR) of {0}.
-planet.planet1.line4,The Threat Assessment System has deemed them {0}.
-planet.planet1.line5,The Damage Assessment System reports {0} to the hull.
-planet.planet1.line6,The Perfection Assessment System has found them to be {0}.
-finalassessment,Final Assessment: {0} Please Confirm.
 
 threatassessment.welcome,Welcome to the Threat Assesment Center
 threatassessment.nothreat,not a threat
