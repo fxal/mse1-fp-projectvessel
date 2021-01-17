@@ -41,8 +41,6 @@ let createHelpText (): string =
     |> (fun s -> s.Trim() |> sprintf "Known commands are: %s")
 
 
-
-
 let evaluate (update: Domain.Message -> State -> State) (state: State) (msg: Message) =
     match msg with
     | DomainMessage msg ->

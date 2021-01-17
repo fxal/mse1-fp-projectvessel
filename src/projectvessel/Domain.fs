@@ -1,4 +1,5 @@
 module Domain
+open System.Threading
 
 type Planet =
     { Name: string
@@ -23,7 +24,8 @@ type State =
       Offset: int
       DamageDetected: bool
       CurrRoom: Room
-      EradicatedPlanets: Planet List }
+      EradicatedPlanets: Planet List
+      mutable StarvedTimer: Timer}
 
 type Message =
     | EradicatePlanet of Planet
@@ -38,10 +40,23 @@ let init (): State =
       Offset = 50
       DamageDetected = false
       CurrRoom = AtPlanet
-      EradicatedPlanets = [] }
+      EradicatedPlanets = []
+      StarvedTimer = null}
 
+
+let goToVictoryRoom (model: State) =
+          model.StarvedTimer.Dispose()
+          printfn "You Starved due to failing to follow commands. The Vessel Can now no longer fulfill it's directive and will self desctruct."
 
 let update (msg: Message) (model: State): State =
+
+    match model.StarvedTimer with
+    | null -> ()
+    | _ -> model.StarvedTimer.Dispose()
+
+    model.StarvedTimer <- new Timer(
+                             TimerCallback (fun _ -> goToVictoryRoom model), null, 5000,0)
+
     match msg with
     | EradicatePlanet planet ->
         { model with
