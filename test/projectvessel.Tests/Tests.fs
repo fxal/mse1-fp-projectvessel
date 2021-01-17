@@ -77,4 +77,4 @@ let ``That replacing multiple fields in csv i18n is possible`` () =
 let ``That multiline csv for i18n purposes can be used`` () =
     let csv = csvloader.Load("../../../../../data/i18n_test_multiline.csv")
     let i18n = csv.Rows |> Seq.map(fun row -> row.Key, row.Value) |> Map.ofSeq
-    Assert.Equal("", i18n.["multilinekey"])
+    Assert.Equal("this\r\nis\r\na\r\nmultilinekey", i18n.["multilinekey"])
