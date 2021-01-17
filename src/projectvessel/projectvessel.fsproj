@@ -5,10 +5,10 @@
     <AssemblyName>projectvessel</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CsvReader.fs" />
     <Compile Include="Domain.fs" />
     <Compile Include="Parser.fs" />
     <Compile Include="Repl.fs" />
-    <Compile Include="CsvReader.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>

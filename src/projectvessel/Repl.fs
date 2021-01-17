@@ -4,6 +4,8 @@ open System
 open Domain
 open Parser
 
+open CsvReader
+
 type Message =
     | DomainMessage of Domain.Message
     | HelpRequested
@@ -46,8 +48,9 @@ let evaluate (update: Domain.Message -> State -> State) (state: State) (msg: Mes
     | DomainMessage msg ->
         let newState = update msg state
 
-        let message =
-            sprintf "The message was %A. New state is %A" msg newState
+        let message = match newState.CurrRoom with
+        | Hyperspace -> i18nNoParameters "planet.planet1.line1"
+        | _ -> sprintf "The message was %A. New state is %A" msg newState
 
         (newState, message)
     | HelpRequested ->
