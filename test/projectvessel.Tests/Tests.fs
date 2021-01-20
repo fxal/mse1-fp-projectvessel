@@ -50,7 +50,7 @@ let ``That applying the inverse of counter event yields the initial state`` () =
 
 [<Fact>]
 let ``That reading the testing csv file yields a csv with one data row`` () =
-    let csv = csvloader.Load("../../../../../data/i18n_test.csv")
+    let csv = i18nLoader.Load("../../../../../data/i18n_test.csv")
 
     let testi18n = csv.Rows |> Seq.map(fun row -> row.Key, row.Value) |> Map.ofSeq
     Assert.Equal("testcontent", testi18n.["testname"])
@@ -63,7 +63,7 @@ let ``That reading the testing csv file yields a csv with one data row`` () =
 
 [<Fact>]
 let ``That replacing multiple fields in csv i18n is possible`` () =
-    let csv = csvloader.Load("../../../../../data/i18n_test_replace.csv")
+    let csv = i18nLoader.Load("../../../../../data/i18n_test_replace.csv")
     let i18n = csv.Rows |> Seq.map(fun row -> row.Key, row.Value) |> Map.ofSeq
     Assert.Equal("this {0} is {1} a {2} test {3}", i18n.["testname"])
 
@@ -75,6 +75,6 @@ let ``That replacing multiple fields in csv i18n is possible`` () =
 
 [<Fact>]
 let ``That multiline csv for i18n purposes can be used`` () =
-    let csv = csvloader.Load("../../../../../data/i18n_test_multiline.csv")
+    let csv = i18nLoader.Load("../../../../../data/i18n_test_multiline.csv")
     let i18n = csv.Rows |> Seq.map(fun row -> row.Key, row.Value) |> Map.ofSeq
     Assert.Equal("this\r\nis\r\na\r\nmultilinekey", i18n.["multilinekey"])

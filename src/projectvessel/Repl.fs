@@ -5,6 +5,7 @@ open Domain
 open Parser
 
 open CsvReader
+open Types
 
 type Message =
     | DomainMessage of Domain.Message
@@ -13,16 +14,30 @@ type Message =
 
 type State = Domain.State
 
-let testPlanet: Domain.Planet =
-    { Name = "Cononis"
+let testPlanet: Types.Planet =
+    { ID = 1
+      Name = "Cononis"
       PopulationName = "Canicuties"
       PopulationCount = 399324
       KSRLevel = 30
       Description = "They are super intelligent" }
 
+
+let createPlanetText (planet: Planet) =
+    i18nWithParameters
+        None
+        "planet.info"
+        [ string planet.PopulationCount
+          planet.PopulationName
+          planet.Description
+          string planet.KSRLevel ]
+
+
 let read (input: string) =
     match input with
-    | ConfirmEradication -> Domain.EradicatePlanet testPlanet |> DomainMessage
+    | ConfirmEradication ->
+        Domain.ConfirmEradication testPlanet
+        |> DomainMessage
     | SelfDestruct -> Domain.SelfDestruct |> DomainMessage
     | Visit room -> Domain.Visit room |> DomainMessage
     | LogOff -> Domain.LogOff |> DomainMessage
@@ -46,9 +61,10 @@ let evaluate (update: Domain.Message -> State -> State) (state: State) (msg: Mes
     | DomainMessage msg ->
         let newState = update msg state
 
-        let message = match newState.CurrRoom with
+        let message =
+            match newState.CurrRoom with
             | Hyperspace -> i18nNoParameters "planet.planet1.line1"
-            | AtPlanet -> i18nWithParameters None "planet.planet1.line2" ["181.236 cute puppies"]
+            | AtPlanet -> createPlanetText newState.AllPlanets.[string state.CurrPlanet]
             | _ -> sprintf "The message was %A. New state is %A" msg newState
 
         (newState, message)

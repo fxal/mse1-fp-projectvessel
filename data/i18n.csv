@@ -10,11 +10,15 @@ You now have to watch as the AI flies from system to system destroying all organ
 Your goal is to find a way to disable or destroy the AI by tricking its own systems."
 
 planet.planet1.line1,You fall out of hyperspace...
-planet.planet1.line2,We have encountered a civilization of {0}.
-planet.planet1.line3,The Technology Assessment System has assigned them a Kardashian Scale Rating (KSR) of {0}.
-planet.planet1.line4,The Threat Assessment System has deemed them {0}.
-planet.planet1.line5,The Damage Assessment System reports {0} to the hull.
-planet.planet1.line6,The Perfection Assessment System has found them to be {0}.
+
+planet.info, "We have encountered a civilization of {0} {1}.
+{2}
+----------
+The Technology Assessment System has assigned them a Kardashian Scale Rating (KSR) of {3}.
+The Threat Assessment System has deemed them {4}.
+The Damage Assessment System reports {5} to the hull.
+The Perfection Assessment System has found them to be {6}."
+
 finalassessment,Final Assessment: {0} Please Confirm.
 
 threatassessment.nothreat,not a threat
