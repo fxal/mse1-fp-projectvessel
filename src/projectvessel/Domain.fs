@@ -28,7 +28,7 @@ type Message =
     | ConfirmEradication of Planet
     | Visit of Room
     | SelfDestruct
-    | LogOff
+    | LeaveHyperspace
 
 let init planetMap (): State =
     { KSRLevel = 2
@@ -69,4 +69,4 @@ let update (msg: Message) (model: State): State =
         | ThreadAss -> { model with CurrRoom = ThreadAss }
         | _ -> model
     | SelfDestruct -> { model with CurrRoom = VictoryRoom } // TODO: implement check if allowed
-    | LogOff -> { model with CurrRoom = AtPlanet }
+    | LeaveHyperspace -> { model with CurrRoom = AtPlanet; CurrPlanet = model.CurrPlanet + 1 }

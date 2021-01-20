@@ -40,7 +40,7 @@ let read (input: string) =
         |> DomainMessage
     | SelfDestruct -> Domain.SelfDestruct |> DomainMessage
     | Visit room -> Domain.Visit room |> DomainMessage
-    | LogOff -> Domain.LogOff |> DomainMessage
+    | LeaveHyperspace -> Domain.LeaveHyperspace |> DomainMessage
     | Help -> HelpRequested
     | ParseFailed -> NotParsable input
 
