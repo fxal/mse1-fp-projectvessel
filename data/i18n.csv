@@ -1,11 +1,13 @@
 key,value
-welcometext.line1,I am Nomad. I am perfect. That which is imperfect must be sterilized.
-welcometext.line2,You are on a spaceship....
+gametitle,"PROJECT VESSEL"
 
-lore.line1,You are an organic on board a Exploratory Vessel controlled by an AI. This Ai does the assessment of planets to be harvested for resources and then destroyed on its own but always requires an organic to verify commands.
-lore.line2,One day the Vessel flies through an ion storm which messes up the systems making the AI change its directive now destroying all planets with life that it encounters. You as the Organic attendant on board must still verify the commands because otherwise the AI will stop dispensing food to you.
-lore.line3,You now have to watch as the AI flies from system to system destroying all organic life just to keep getting fed by the AI.
-lore.line4,Your goal is to find a way to disable or destroy the AI by tricking its own systems.
+welcometext,"I am Nomad. I am perfect. That which is imperfect must be sterilized.
+You are on a spaceship...."
+
+lore,"You are an organic on board a Exploratory Vessel controlled by an AI. This AI does the assessment of planets to be harvested for resources and then destroyed on its own but always requires an organic to verify commands.
+One day the Vessel flies through an ion storm which messes up the systems making the AI change its directive now destroying all planets with life that it encounters. You as the Organic attendant on board must still verify the commands because otherwise the AI will stop dispensing food to you.
+You now have to watch as the AI flies from system to system destroying all organic life just to keep getting fed by the AI.
+Your goal is to find a way to disable or destroy the AI by tricking its own systems."
 
 planet.planet1.line1,You fall out of hyperspace...
 planet.planet1.line2,We have encountered a civilization of {0}.
