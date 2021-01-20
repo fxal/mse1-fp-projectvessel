@@ -59,6 +59,9 @@ let i18nNoParameters (i18nkey: string) =
 type planetsLoader =
     CsvProvider<Schema="ID (string), Name (string), PopulationName (string), PopulationCount (string), KSR (string), Description (string)", HasHeaders=false>
 
+let parseInt (word: string) =
+    match Int32.TryParse word with
+    | (_, arg) -> arg
 
 let fallbackPlanet: Types.Planet =
     { ID = 1
@@ -69,11 +72,6 @@ let fallbackPlanet: Types.Planet =
       Description = "They are super intelligent" }
 
 let planets: Map<string, Planet> =
-    let parseInt (word: string) =
-        match Int32.TryParse word with
-        | (true, arg) -> arg
-        | (false, arg) -> arg
-
     planetsLoader
         .Load("../../../../../data/planets.csv")
         .Rows

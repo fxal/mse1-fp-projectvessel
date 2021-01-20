@@ -1,5 +1,6 @@
 module projectvessel.Tests
 
+open Types
 open Xunit
 open FsCheck
 open CsvReader
@@ -78,3 +79,23 @@ let ``That multiline csv for i18n purposes can be used`` () =
     let csv = i18nLoader.Load("../../../../../data/i18n_test_multiline.csv")
     let i18n = csv.Rows |> Seq.map(fun row -> row.Key, row.Value) |> Map.ofSeq
     Assert.Equal("this\r\nis\r\na\r\nmultilinekey", i18n.["multilinekey"])
+    
+[<Fact>]
+let ``That loading planet data from csv is possible`` () =
+    let csv = planetsLoader.Load("../../../../../data/planets_test.csv")
+    let planets: Map<string, Planet> = csv.Rows |> Seq.map (fun row ->
+        (row.ID,
+         { ID = parseInt row.ID
+           Name = row.Name
+           PopulationName = row.PopulationName
+           PopulationCount = parseInt row.PopulationCount
+           KSRLevel = parseInt row.KSR
+           Description = row.Description })) |> Map.ofSeq
+    Assert.Equal
+        ({ ID = 1
+           Name = "planet-name"
+           PopulationName = "population-name"
+           PopulationCount = 123000
+           KSRLevel = 70
+           Description = "Description" },
+         planets.["1"])

@@ -7,3 +7,5 @@ type Planet =
       PopulationCount: int
       KSRLevel: int
       Description: string }
+
+type EradicatedPlanet = EradicatedPlanet of Planet
