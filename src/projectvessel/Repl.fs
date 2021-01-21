@@ -4,6 +4,9 @@ open System
 open Domain
 open Parser
 
+open CsvReader
+open Types
+
 type Message =
     | DomainMessage of Domain.Message
     | HelpRequested
@@ -11,19 +14,33 @@ type Message =
 
 type State = Domain.State
 
-let testPlanet: Domain.Planet =
-    { Name = "Cononis"
+let testPlanet: Types.Planet =
+    { ID = 1
+      Name = "Cononis"
       PopulationName = "Canicuties"
       PopulationCount = 399324
       KSRLevel = 30
       Description = "They are super intelligent" }
 
+
+let createPlanetText (planet: Planet) =
+    i18nWithParameters
+        None
+        "planet.info"
+        [ string planet.PopulationCount
+          planet.PopulationName
+          planet.Description
+          string planet.KSRLevel ]
+
+
 let read (input: string) =
     match input with
-    | ConfirmEradication -> Domain.EradicatePlanet testPlanet |> DomainMessage
+    | ConfirmEradication ->
+        Domain.ConfirmEradication testPlanet
+        |> DomainMessage
     | SelfDestruct -> Domain.SelfDestruct |> DomainMessage
     | Visit room -> Domain.Visit room |> DomainMessage
-    | LogOff -> Domain.LogOff |> DomainMessage
+    | LeaveHyperspace -> Domain.LeaveHyperspace |> DomainMessage
     | Help -> HelpRequested
     | ParseFailed -> NotParsable input
 
@@ -39,15 +56,16 @@ let createHelpText (): string =
     |> (fun s -> s.Trim() |> sprintf "Known commands are: %s")
 
 
-
-
 let evaluate (update: Domain.Message -> State -> State) (state: State) (msg: Message) =
     match msg with
     | DomainMessage msg ->
         let newState = update msg state
 
         let message =
-            sprintf "The message was %A. New state is %A" msg newState
+            match newState.CurrRoom with
+            | Hyperspace -> i18nNoParameters "planet.planet1.line1"
+            | AtPlanet -> createPlanetText newState.AllPlanets.[string state.CurrPlanet]
+            | _ -> sprintf "The message was %A. New state is %A" msg newState
 
         (newState, message)
     | HelpRequested ->

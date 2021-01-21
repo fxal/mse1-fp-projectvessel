@@ -1,11 +1,7 @@
 module Domain
 
-type Planet =
-    { Name: string
-      PopulationName: string
-      PopulationCount: int
-      KSRLevel: int
-      Description: string }
+open System.Threading
+open Types
 
 type Room =
     | Hyperspace
@@ -23,27 +19,45 @@ type State =
       Offset: int
       DamageDetected: bool
       CurrRoom: Room
-      EradicatedPlanets: Planet List }
+      AllPlanets: Map<string, Planet>
+      CurrPlanet: int
+      EradicatedPlanets: Planet List
+      mutable StarvedTimer: Timer }
 
 type Message =
-    | EradicatePlanet of Planet
+    | ConfirmEradication of Planet
     | Visit of Room
     | SelfDestruct
-    | LogOff
+    | LeaveHyperspace
 
-
-let init (): State =
+let init planetMap (): State =
     { KSRLevel = 2
       DamageThreshold = 10
       Offset = 50
       DamageDetected = false
       CurrRoom = AtPlanet
-      EradicatedPlanets = [] }
+      AllPlanets = planetMap
+      CurrPlanet = 1
+      EradicatedPlanets = []
+      StarvedTimer = null }
 
+
+let goToVictoryRoom (model: State) =
+    model.StarvedTimer.Dispose()
+
+    printfn
+        "You Starved due to failing to follow commands. The Vessel Can now no longer fulfill it's directive and will self desctruct."
 
 let update (msg: Message) (model: State): State =
+
+    match model.StarvedTimer with
+    | null -> ()
+    | _ -> model.StarvedTimer.Dispose()
+
+    model.StarvedTimer <- new Timer(TimerCallback(fun _ -> goToVictoryRoom model), null, 5000, 0)
+
     match msg with
-    | EradicatePlanet planet ->
+    | ConfirmEradication planet ->
         { model with
               EradicatedPlanets = planet :: model.EradicatedPlanets
               CurrRoom = Hyperspace }
@@ -55,4 +69,4 @@ let update (msg: Message) (model: State): State =
         | ThreadAss -> { model with CurrRoom = ThreadAss }
         | _ -> model
     | SelfDestruct -> { model with CurrRoom = VictoryRoom } // TODO: implement check if allowed
-    | LogOff -> { model with CurrRoom = AtPlanet }
+    | LeaveHyperspace -> { model with CurrRoom = AtPlanet; CurrPlanet = model.CurrPlanet + 1 }
