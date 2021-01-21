@@ -5,6 +5,7 @@
     <AssemblyName>projectvessel</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Types.fs" />
     <Compile Include="CsvReader.fs" />
     <Compile Include="Domain.fs" />
     <Compile Include="Parser.fs" />
