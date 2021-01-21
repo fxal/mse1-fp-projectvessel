@@ -1,4 +1,5 @@
 key,value
+
 gametitle,"PROJECT VESSEL"
 
 welcometext,"I am Nomad. I am perfect. That which is imperfect must be sterilized.
@@ -10,7 +11,7 @@ One day the Vessel flies through an ion storm which messes up the systems making
 You now have to watch as the AI flies from system to system destroying all organic life just to keep getting fed by the AI.
 Your goal is to find a way to disable or destroy the AI by tricking its own systems."
 
-planet.planet1.line1,You fall out of hyperspace...
+planet.planet1.line1,"You fall out of hyperspace..."
 
 planet.info, "We have encountered a civilization of {0} {1}.
 {2}
@@ -20,17 +21,51 @@ The Threat Assessment System has deemed them {4}.
 The Damage Assessment System reports {5} to the hull.
 The Perfection Assessment System has found them to be {6}."
 
-finalassessment,Final Assessment: {0} Please Confirm.
+finalassessment,"Final Assessment: {0} Please Confirm."
 
-threatassessment.nothreat,not a threat
-threatassessment.threat,a threat
+hyperspace.welcome,"We have entered Hyperspace. 
+Your total galactic sterilisation count is {0}."
 
-damageassessment.damage,damage
-damageassessment.nodamage,no damage
+threatassessment.welcome,"Welcome to the Threat Assesment Center"
+threatassessment.nothreat,"not a threat"
+threatassessment.threat,"a threat"
 
-perfectionassessment.perfect,perfect
-perfectionassessment.imperfect,imperfect
+techassessment.welcome,"Welcome to the Technology Assessment System.
+According to the kardashian scale our systems are at tech level {0}."
 
-finalassessment.order.sterilize,Sterilize Planet.
-finalassessment.order.flee,Flee from threat.
-finalassessment.order.fight,Fight threat.
+techassessment.explainkardashian,"The kardashian scale defines a civilizations level of stupidity. The higher the value the less evolved the civilization is. 
+A typical developement of civilizations up to the information age is:
+
+|=|
+|==|
+|===|
+|=====| (Keeping up with the Kardashians)
+|==|
+|=|
+"
+techassessment.calibrate,"Calibrating kardashian scale"
+techassessment.currentksr,"The Vessel's current KSR is {0} (degraded due to human presence). "
+techassessment.calibrate.entervalue,"Enter New Offset value."
+techassessment.calibrate.finished,"Kardashian Scale Calibrated."
+
+damageassessment.damage,"damage"
+damageassessment.nodamage,"no damage"
+
+damageassessment.welcome,"Welcome to the Damage Assessment System.
+We are currently detecting {0}.
+damageassessment.explain,Damage is measured as incoming energy per square meter.
+Current incoming energy per square meter is 1,000 W.
+Damage will be reported at a minimum of 10,000 kW incoming energy per square meter."
+
+damageassessment.calibrate,"Calibrating Damage Assessment System.
+Set damage report limit in energy per square meter."
+damageassessment.calibrate.finished,"Damage report limit set to {0}W per square meter."
+
+perfectionassessment.welcome,"Welcome to the perfection assessment center.
+That which is imperfect must be sterilized."
+perfectionassessment.perfect,"perfect"
+perfectionassessment.imperfect,"imperfect"
+
+finalassessment.order.sterilize,"Sterilize Planet."
+finalassessment.order.flee,"Flee from threat."
+finalassessment.order.fight,"Fight threat."
