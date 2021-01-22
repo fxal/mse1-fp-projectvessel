@@ -18,6 +18,7 @@ type Room =
 type State =
     { KSRLevel: int
       DamageThreshold: int
+      DamageReceived: int
       Offset: int
       DamageDetected: bool
       CurrRoom: Room
@@ -37,6 +38,7 @@ type Message =
 let init planetMap (): State =
     { KSRLevel = 2
       DamageThreshold = 100000
+      DamageReceived = 1000
       Offset = 0
       DamageDetected = false
       CurrRoom = Start
@@ -79,6 +81,7 @@ let starve (model: State) =
     printfn "%s" (i18nNoParameters "starve")
 
 let update (msg: Message) (model: State): State =
+
     match model.StarvedTimer with
     | null -> ()
     | _ -> model.StarvedTimer.Dispose()
@@ -123,4 +126,4 @@ let update (msg: Message) (model: State): State =
         else
             printfn "%s" (i18nNoParameters "nopermission"); model
     | SelfDestruct -> checkInput model selfDestructAllowed { model with CurrRoom = VictoryRoom }
-    | LeaveHyperspace -> checkInput model leaveHyperspaceAllowed { model with CurrRoom = AtPlanet }
+    | LeaveHyperspace -> checkInput model leaveHyperspaceAllowed { model with CurrRoom = AtPlanet; DamageDetected = model.DamageThreshold < model.DamageReceived }
