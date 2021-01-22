@@ -45,16 +45,17 @@ According to the kardashian scale our systems are at tech level {0}."
 techassessment.explainkardashian,"The kardashian scale defines a civilizations level of stupidity. The higher the value the less evolved the civilization is. 
 A typical developement of civilizations up to the information age is:
 
-|=|
-|==|
-|===|
+|=    | (Hunters and gatherers)
+|==   |
+|===  |
 |=====| (Keeping up with the Kardashians)
-|==|
-|=|
+|==   |
+|=    |
+||    | (Transcendent life form)
+
 "
-techassessment.calibrate,"Calibrating kardashian scale"
-techassessment.currentksr,"The Vessel's current KSR is {0} (degraded due to human presence). "
-techassessment.calibrate.entervalue,"Enter New Offset value."
+techassessment.calibrate,"Calibrating kardashian scale. Current offset is {0}.
+Enter New Offset value."
 techassessment.calibrate.finished,"Kardashian Scale Calibrated."
 
 damageassessment.damage,"damage"

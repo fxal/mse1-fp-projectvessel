@@ -55,7 +55,7 @@ let evaluate (update: Domain.Message -> State -> State) (state: State) (msg: Mes
             match newState.CurrRoom with
             | Hyperspace -> GameText.enteringHyperspace newState.EradicatedPlanets.Head newState.EradicatedLifeforms
             | AtPlanet -> GameText.atPlanet newState.AllPlanets.[string state.CurrPlanet] newState
-            | TechAss -> GameText.enteringTechAss newState.KSRLevel
+            | TechAss -> GameText.enteringTechAss newState
             | ThreatAss -> GameText.enteringThreatAss
             | DamageAss -> GameText.enteringDamageAss newState
             | PerfectionAss -> GameText.enteringPerfectionAss
