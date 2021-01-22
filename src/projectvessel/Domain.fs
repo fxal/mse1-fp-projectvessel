@@ -104,7 +104,7 @@ let update (msg: Message) (model: State): State =
                       + uint32
                           model.AllPlanets.[string model.CurrPlanet]
                               .PopulationCount
-                  CurrPlanet = model.CurrPlanet + 1
+                  CurrPlanet = if model.CurrPlanet > model.EradicatedPlanets.Length then 1 else model.CurrPlanet + 1
                   CurrRoom = Hyperspace }
 
     | Visit ass ->
