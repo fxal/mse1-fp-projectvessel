@@ -10,7 +10,7 @@ type Room =
     | VictoryRoom
     | Assessment
     | TechAss
-    | ThreadAss
+    | ThreatAss
     | DamageAss
     | PerfectionAss
 
@@ -29,6 +29,7 @@ type State =
 type Message =
     | ConfirmEradication
     | Visit of Room
+    | Calibrate of int
     | SelfDestruct
     | LeaveHyperspace
 
@@ -48,12 +49,16 @@ let init planetMap (): State =
 // some state condition checks if entering a room is allowed ...
 let eradicationAllowed (model: State) = model.CurrRoom = AtPlanet
 
-let visitAllowed (model: State) = model.CurrRoom = Hyperspace
+let visitAssessmentAllowed (model: State) = model.CurrRoom = Hyperspace
+
+let calibrationAllowed (model: State) =
+    model.CurrRoom = DamageAss
+    || model.CurrRoom = TechAss
 
 let leaveHyperspaceAllowed (model: State) =
     model.CurrRoom = Start
     || model.CurrRoom = PerfectionAss
-    || model.CurrRoom = ThreadAss
+    || model.CurrRoom = ThreatAss
     || model.CurrRoom = DamageAss
     || model.CurrRoom = TechAss
 
@@ -75,12 +80,13 @@ let goToVictoryRoom (model: State) =
 
 let update (msg: Message) (model: State): State =
 
+    (*
     match model.StarvedTimer with
     | null -> ()
     | _ -> model.StarvedTimer.Dispose()
 
     model.StarvedTimer <- new Timer(TimerCallback(fun _ -> goToVictoryRoom model), null, 5000, 0)
-
+*)
     match msg with
     | ConfirmEradication ->
         checkInput
@@ -99,12 +105,22 @@ let update (msg: Message) (model: State): State =
                   CurrRoom = Hyperspace }
 
     | Visit ass ->
-        if visitAllowed model then
+        if visitAssessmentAllowed model then
             match ass with
             | DamageAss -> { model with CurrRoom = DamageAss }
             | PerfectionAss -> { model with CurrRoom = PerfectionAss }
             | TechAss -> { model with CurrRoom = TechAss }
-            | ThreadAss -> { model with CurrRoom = ThreadAss }
+            | ThreatAss -> { model with CurrRoom = ThreatAss }
+            | _ -> model
+        else
+            model
+    | Calibrate numInput ->
+        if calibrationAllowed model then
+            match model.CurrRoom with
+            | TechAss -> { model with Offset = numInput }
+            | DamageAss ->
+                { model with
+                      DamageThreshold = numInput }
             | _ -> model
         else
             model

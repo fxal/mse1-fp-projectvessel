@@ -29,6 +29,7 @@ let read (input: string) =
     | ConfirmEradication -> Domain.ConfirmEradication |> DomainMessage
     | SelfDestruct -> Domain.SelfDestruct |> DomainMessage
     | Visit room -> Domain.Visit room |> DomainMessage
+    | Calibrate numInput -> Domain.Calibrate numInput |> DomainMessage
     | LeaveHyperspace -> Domain.LeaveHyperspace |> DomainMessage
     | Help -> HelpRequested
     | ParseFailed -> NotParsable input
@@ -54,10 +55,10 @@ let evaluate (update: Domain.Message -> State -> State) (state: State) (msg: Mes
             match newState.CurrRoom with
             | Hyperspace -> GameText.enteringHyperspace newState.EradicatedPlanets.Head newState.EradicatedLifeforms
             | AtPlanet -> GameText.atPlanet newState.AllPlanets.[string state.CurrPlanet]
-            | TechAss -> "in tech assessment - type LeaveHyperspace"
-            | ThreadAss -> "in thread assessment - type LeaveHyperspace"
-            | DamageAss -> "in damage assessment - type LeaveHyperspace"
-            | PerfectionAss -> "in perfection assessment - type LeaveHyperspace"
+            | TechAss -> GameText.enteringTechAss newState.KSRLevel
+            | ThreatAss -> GameText.enteringThreatAss
+            | DamageAss -> GameText.enteringDamageAss
+            | PerfectionAss -> GameText.enteringPerfectionAss
             | _ -> sprintf "The message was %A. New state is %A" msg newState
 
         (newState, message)
