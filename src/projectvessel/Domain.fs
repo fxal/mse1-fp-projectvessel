@@ -36,7 +36,7 @@ type Message =
 
 let init planetMap (): State =
     { KSRLevel = 2
-      DamageThreshold = 10
+      DamageThreshold = 100000
       Offset = 50
       DamageDetected = false
       CurrRoom = Start

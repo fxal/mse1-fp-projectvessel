@@ -34,10 +34,10 @@ let enteringTechAss (ksrLevel: int) =
     + i18nNoParameters "techassessment.explainkardashian"
     + "\n Type 'LeaveHyperspace' or 'Calibrate [number]'"
 
-let enteringDamageAss =
-    i18nWithParameters None "damageassessment.welcome" []
+let enteringDamageAss (state: State) =
+    i18nNoParameters "damageassessment.welcome" 
     + "\n"
-    + i18nNoParameters "damageassessment.explain"
+    + i18nWithParameters None "damageassessment.explain" [ string state.DamageThreshold ]
     + "\n Type 'LeaveHyperspace' or 'Calibrate [number]'"
 
 let enteringThreatAss =
