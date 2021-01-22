@@ -1,16 +1,20 @@
-﻿module projectvessel.GameText
+module projectvessel.GameText
 
 open CsvReader
 open Types
+open Domain
 
-let atPlanet (planet: Planet) =
+let atPlanet (planet: Planet) (state: State) =
     i18nWithParameters
         None
         "planet.info"
         [ string planet.PopulationCount
           planet.PopulationName
           planet.Description
-          string planet.KSRLevel ]
+          string planet.KSRLevel
+          if state.DamageDetected && state.KSRLevel > planet.KSRLevel then "a threat" else "no threat"
+          if state.DamageDetected then "damage" else "no damage"
+          if state.KSRLevel > planet.KSRLevel then "superior" else "inferior" ]
 
 let enteringHyperspace (planet: Planet) (eradicatedLifeforms: uint32) =
     i18nWithParameters
