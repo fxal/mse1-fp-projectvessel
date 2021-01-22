@@ -59,6 +59,7 @@ let evaluate (update: Domain.Message -> State -> State) (state: State) (msg: Mes
             | ThreatAss -> GameText.enteringThreatAss
             | DamageAss -> GameText.enteringDamageAss
             | PerfectionAss -> GameText.enteringPerfectionAss
+            | VictoryRoom -> "Game over"
             | _ -> sprintf "The message was %A. New state is %A" msg newState
 
         (newState, message)
