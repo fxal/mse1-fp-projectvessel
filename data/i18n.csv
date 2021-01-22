@@ -77,3 +77,5 @@ finalassessment.order.fight,"Fight threat."
 
 nopermission,"You can not do this right now...try something else.
 "
+
+starve,"You Starved due to failing to follow commands. The Vessel Can now no longer fulfill it's directive and will self desctruct."

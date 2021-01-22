@@ -62,17 +62,16 @@ let selfDestructAllowed (model: State) =
     model.CurrRoom = Hyperspace
     && model.DamageDetected = true
 
+
 let checkInput (model: State) (isAllowedCondition: State -> bool) (updatedModel: State) =
     match (isAllowedCondition model) with
     | true -> updatedModel
     | false -> printfn "%s" (i18nNoParameters "nopermission"); model
 
 
-let goToVictoryRoom (model: State) =
+let starve (model: State) =
     model.StarvedTimer.Dispose()
-
-    printfn
-        "You Starved due to failing to follow commands. The Vessel Can now no longer fulfill it's directive and will self desctruct."
+    printfn "%s" (i18nNoParameters "starve")
 
 let update (msg: Message) (model: State): State =
 
@@ -80,7 +79,7 @@ let update (msg: Message) (model: State): State =
     | null -> ()
     | _ -> model.StarvedTimer.Dispose()
 
-    model.StarvedTimer <- new Timer(TimerCallback(fun _ -> goToVictoryRoom model), null, 5000, 0)
+    model.StarvedTimer <- new Timer(TimerCallback(fun _ -> starve model), null, 5000, 0)
 
     match msg with
     | ConfirmEradication ->
