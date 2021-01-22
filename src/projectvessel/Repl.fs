@@ -52,7 +52,7 @@ let evaluate (update: Domain.Message -> State -> State) (state: State) (msg: Mes
 
         let message =
             match newState.CurrRoom with
-            | Hyperspace -> GameText.enteringHyperspace newState.EradicatedPlanets.Head newState.EradicatedPlanets
+            | Hyperspace -> GameText.enteringHyperspace newState.EradicatedPlanets.Head newState.EradicatedLifeforms
             | AtPlanet -> GameText.atPlanet newState.AllPlanets.[string state.CurrPlanet]
             | TechAss -> "in tech assessment - type LeaveHyperspace"
             | ThreadAss -> "in thread assessment - type LeaveHyperspace"

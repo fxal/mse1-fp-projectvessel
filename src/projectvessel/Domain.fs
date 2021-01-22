@@ -23,6 +23,7 @@ type State =
       AllPlanets: Map<string, Planet>
       CurrPlanet: int
       EradicatedPlanets: Planet List
+      EradicatedLifeforms: uint32 // 0 to 4.294.967.295
       mutable StarvedTimer: Timer }
 
 type Message =
@@ -40,6 +41,7 @@ let init planetMap (): State =
       AllPlanets = planetMap
       CurrPlanet = 1
       EradicatedPlanets = []
+      EradicatedLifeforms = 0u
       StarvedTimer = null }
 
 
@@ -59,8 +61,8 @@ let selfDestructAllowed (model: State) =
     model.CurrRoom = Hyperspace
     && model.DamageDetected = true
 
-let checkInput (model: State) (condition: State -> bool) (updatedModel: State) =
-    match (condition model) with
+let checkInput (model: State) (isAllowedCondition: State -> bool) (updatedModel: State) =
+    match (isAllowedCondition model) with
     | true -> updatedModel
     | false -> model
 
@@ -88,6 +90,11 @@ let update (msg: Message) (model: State): State =
                   EradicatedPlanets =
                       model.AllPlanets.[string model.CurrPlanet]
                       :: model.EradicatedPlanets
+                  EradicatedLifeforms =
+                      model.EradicatedLifeforms
+                      + uint32
+                          model.AllPlanets.[string model.CurrPlanet]
+                              .PopulationCount
                   CurrPlanet = model.CurrPlanet + 1
                   CurrRoom = Hyperspace }
 

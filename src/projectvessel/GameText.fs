@@ -12,7 +12,7 @@ let atPlanet (planet: Planet) =
           planet.Description
           string planet.KSRLevel ]
 
-let enteringHyperspace (planet: Planet) (eradicatedPlanets: Planet List) =
+let enteringHyperspace (planet: Planet) (eradicatedLifeforms: uint32) =
     (i18nWithParameters
         None
          "hyperspace.successfullyEradicated"
@@ -20,6 +20,6 @@ let enteringHyperspace (planet: Planet) (eradicatedPlanets: Planet List) =
            planet.PopulationName
            planet.Name ])
     + "\n"
-    + (i18nWithParameters None "hyperspace.welcome" [ string eradicatedPlanets.Length ])
+    + (i18nWithParameters None "hyperspace.welcome" [ string eradicatedLifeforms ])
     + "\n"
     + (i18nNoParameters "hyperspace.commands")
