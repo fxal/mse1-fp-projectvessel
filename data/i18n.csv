@@ -15,16 +15,21 @@ planet.planet1.line1,"You fall out of hyperspace..."
 
 planet.info, "We have encountered a civilization of {0} {1}.
 {2}
-----------
+
 The Technology Assessment System has assigned them a Kardashian Scale Rating (KSR) of {3}.
 The Threat Assessment System has deemed them {4}.
 The Damage Assessment System reports {5} to the hull.
-The Perfection Assessment System has found them to be {6}."
+The Perfection Assessment System has found them to be {6}.
 
-finalassessment,"Final Assessment: {0} Please Confirm."
+Please Confirm Eradication with 'ConfirmEradication'"
+
+hyperspace.successfullyEradicated, "You successfully eradicated {0} {1} on planet '{2}'"
 
 hyperspace.welcome,"We have entered Hyperspace. 
 Your total galactic sterilisation count is {0}."
+
+hyperspace.commands,"You have following commands at your disposal:
+SelfDestruct, Visit Tech, Visit Perfection, Visit Thread, Visit Damage"
 
 threatassessment.welcome,"Welcome to the Threat Assesment Center"
 threatassessment.nothreat,"not a threat"
@@ -69,3 +74,6 @@ perfectionassessment.imperfect,"imperfect"
 finalassessment.order.sterilize,"Sterilize Planet."
 finalassessment.order.flee,"Flee from threat."
 finalassessment.order.fight,"Fight threat."
+
+nopermission,"You can not do this right now...try something else.
+"
