@@ -24,7 +24,11 @@ The Threat Assessment System has deemed them {4}.
 The Damage Assessment System reports {5} to the hull.
 The Perfection Assessment System has found them to be {6}.
 
-Please Confirm Eradication with 'ConfirmEradication'"
+{7}"
+
+planet.action.eradicate,"Please Confirm Eradication with 'ConfirmEradication'"
+planet.action.selfdestruct,"THE SHIP HAS DETECTED DAMAGE TO THE HULL FROM A SUPERIOR FORCE. MISSION ABORT. CONFIRM SELF DESTRUCT.
+Type 'SelfDestruct'"
 
 hyperspace.successfullyEradicated, "You successfully eradicated {0} {1} on planet '{2}'"
 
@@ -84,3 +88,7 @@ nopermission,"You can not do this right now...try something else.
 "
 
 starve,"You Starved due to failing to follow commands. The Vessel Can now no longer fulfill it's directive and will self desctruct."
+
+gameover,"Game over.
+You have won the game, the eradication of countless life forms by this ship was halted. You, of course , payed the ultimate price. Along with {0} other life forms in this galaxy.
+Good job though."

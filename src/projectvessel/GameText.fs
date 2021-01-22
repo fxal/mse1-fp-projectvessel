@@ -14,7 +14,8 @@ let atPlanet (planet: Planet) (state: State) =
           string planet.KSRLevel
           if state.DamageDetected && state.KSRLevel > (planet.KSRLevel - state.Offset) then "a threat" else "no threat"
           if state.DamageDetected then "damage" else "no damage"
-          if state.KSRLevel > (planet.KSRLevel - state.Offset) then "superior" else "inferior" ]
+          if state.KSRLevel > (planet.KSRLevel - state.Offset) then "superior" else "inferior"
+          if state.DamageDetected && state.KSRLevel > (planet.KSRLevel - state.Offset) then (i18nNoParameters "planet.action.selfdestruct") else (i18nNoParameters "planet.action.eradicate")]
 
 let enteringHyperspace (planet: Planet) (eradicatedLifeforms: uint32) =
     i18nWithParameters

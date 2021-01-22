@@ -66,8 +66,10 @@ let leaveHyperspaceAllowed (model: State) =
     || model.CurrRoom = TechAss
 
 let selfDestructAllowed (model: State) =
-    model.CurrRoom = Hyperspace
+    let currentPlanet = model.AllPlanets.[string model.CurrPlanet]
+    model.CurrRoom = AtPlanet
     && model.DamageDetected = true
+    && model.KSRLevel > (currentPlanet.KSRLevel - model.Offset)
 
 
 let checkInput (model: State) (isAllowedCondition: State -> bool) (updatedModel: State) =
@@ -86,7 +88,7 @@ let update (msg: Message) (model: State): State =
     | null -> ()
     | _ -> model.StarvedTimer.Dispose()
 
-    model.StarvedTimer <- new Timer(TimerCallback(fun _ -> starve model), null, 500000, 0)
+    model.StarvedTimer <- new Timer(TimerCallback(fun _ -> starve { model with CurrRoom = VictoryRoom }), null, 5000, 0)
 
     match msg with
     | ConfirmEradication ->
@@ -125,5 +127,5 @@ let update (msg: Message) (model: State): State =
             | _ -> model
         else
             printfn "%s" (i18nNoParameters "nopermission"); model
-    | SelfDestruct -> checkInput model selfDestructAllowed { model with CurrRoom = VictoryRoom }
+    | SelfDestruct -> checkInput model selfDestructAllowed { model with CurrRoom = VictoryRoom } 
     | LeaveHyperspace -> checkInput model leaveHyperspaceAllowed { model with CurrRoom = AtPlanet; DamageDetected = model.DamageThreshold < model.DamageReceived }
