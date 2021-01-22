@@ -74,3 +74,6 @@ perfectionassessment.imperfect,"imperfect"
 finalassessment.order.sterilize,"Sterilize Planet."
 finalassessment.order.flee,"Flee from threat."
 finalassessment.order.fight,"Fight threat."
+
+nopermission,"You can not do this right now...try something else.
+"

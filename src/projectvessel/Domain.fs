@@ -2,6 +2,7 @@ module Domain
 
 open System.Threading
 open Types
+open CsvReader
 
 type Room =
     | Start
@@ -64,7 +65,7 @@ let selfDestructAllowed (model: State) =
 let checkInput (model: State) (isAllowedCondition: State -> bool) (updatedModel: State) =
     match (isAllowedCondition model) with
     | true -> updatedModel
-    | false -> model
+    | false -> printfn "%s" (i18nNoParameters "nopermission"); model
 
 
 let goToVictoryRoom (model: State) =
@@ -107,6 +108,6 @@ let update (msg: Message) (model: State): State =
             | ThreadAss -> { model with CurrRoom = ThreadAss }
             | _ -> model
         else
-            model
+            printfn "%s" (i18nNoParameters "nopermission"); model
     | SelfDestruct -> checkInput model selfDestructAllowed { model with CurrRoom = VictoryRoom }
     | LeaveHyperspace -> checkInput model leaveHyperspaceAllowed { model with CurrRoom = AtPlanet }

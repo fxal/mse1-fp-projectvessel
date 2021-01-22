@@ -58,6 +58,7 @@ let evaluate (update: Domain.Message -> State -> State) (state: State) (msg: Mes
             | ThreadAss -> "in thread assessment - type LeaveHyperspace"
             | DamageAss -> "in damage assessment - type LeaveHyperspace"
             | PerfectionAss -> "in perfection assessment - type LeaveHyperspace"
+            | VictoryRoom -> "Game over"
             | _ -> sprintf "The message was %A. New state is %A" msg newState
 
         (newState, message)
