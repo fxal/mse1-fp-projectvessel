@@ -6,6 +6,7 @@ open Parser
 
 open CsvReader
 open Types
+open projectvessel
 
 type Message =
     | DomainMessage of Domain.Message
@@ -23,21 +24,9 @@ let testPlanet: Types.Planet =
       Description = "They are super intelligent" }
 
 
-let createPlanetText (planet: Planet) =
-    i18nWithParameters
-        None
-        "planet.info"
-        [ string planet.PopulationCount
-          planet.PopulationName
-          planet.Description
-          string planet.KSRLevel ]
-
-
 let read (input: string) =
     match input with
-    | ConfirmEradication ->
-        Domain.ConfirmEradication testPlanet
-        |> DomainMessage
+    | ConfirmEradication -> Domain.ConfirmEradication |> DomainMessage
     | SelfDestruct -> Domain.SelfDestruct |> DomainMessage
     | Visit room -> Domain.Visit room |> DomainMessage
     | LeaveHyperspace -> Domain.LeaveHyperspace |> DomainMessage
@@ -63,8 +52,12 @@ let evaluate (update: Domain.Message -> State -> State) (state: State) (msg: Mes
 
         let message =
             match newState.CurrRoom with
-            | Hyperspace -> i18nNoParameters "planet.planet1.line1"
-            | AtPlanet -> createPlanetText newState.AllPlanets.[string state.CurrPlanet]
+            | Hyperspace -> GameText.enteringHyperspace newState.EradicatedPlanets.Head newState.EradicatedPlanets
+            | AtPlanet -> GameText.atPlanet newState.AllPlanets.[string state.CurrPlanet]
+            | TechAss -> "in tech assessment - type LeaveHyperspace"
+            | ThreadAss -> "in thread assessment - type LeaveHyperspace"
+            | DamageAss -> "in damage assessment - type LeaveHyperspace"
+            | PerfectionAss -> "in perfection assessment - type LeaveHyperspace"
             | _ -> sprintf "The message was %A. New state is %A" msg newState
 
         (newState, message)
@@ -82,7 +75,7 @@ let evaluate (update: Domain.Message -> State -> State) (state: State) (msg: Mes
 
 let print (state: State, msg: string) =
     printfn "%s\n" msg
-    printf "> "
+    printf "---------- \n> "
 
     state
 

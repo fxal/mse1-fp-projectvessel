@@ -8,7 +8,7 @@ let main argv =
     printfn "%s\r\n" (i18nNoParameters "gametitle")
     printfn "%s\r\n" (i18nNoParameters "lore")
     printfn "%s" (i18nNoParameters "welcometext")
-    printf "> "
+    printf "---------- \n> "
 
     Repl.loop initialState
     0 // return an integer exit code

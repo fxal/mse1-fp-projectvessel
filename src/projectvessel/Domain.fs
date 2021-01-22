@@ -25,7 +25,7 @@ type State =
       mutable StarvedTimer: Timer }
 
 type Message =
-    | ConfirmEradication of Planet
+    | ConfirmEradication
     | Visit of Room
     | SelfDestruct
     | LeaveHyperspace
@@ -37,7 +37,7 @@ let init planetMap (): State =
       DamageDetected = false
       CurrRoom = AtPlanet
       AllPlanets = planetMap
-      CurrPlanet = 1
+      CurrPlanet = 0
       EradicatedPlanets = []
       StarvedTimer = null }
 
@@ -50,6 +50,7 @@ let goToVictoryRoom (model: State) =
 
 let update (msg: Message) (model: State): State =
 
+
     match model.StarvedTimer with
     | null -> ()
     | _ -> model.StarvedTimer.Dispose()
@@ -57,9 +58,11 @@ let update (msg: Message) (model: State): State =
     model.StarvedTimer <- new Timer(TimerCallback(fun _ -> goToVictoryRoom model), null, 5000, 0)
 
     match msg with
-    | ConfirmEradication planet ->
+    | ConfirmEradication ->
         { model with
-              EradicatedPlanets = planet :: model.EradicatedPlanets
+              EradicatedPlanets =
+                  model.AllPlanets.[string model.CurrPlanet]
+                  :: model.EradicatedPlanets
               CurrRoom = Hyperspace }
     | Visit ass ->
         match ass with
@@ -69,4 +72,7 @@ let update (msg: Message) (model: State): State =
         | ThreadAss -> { model with CurrRoom = ThreadAss }
         | _ -> model
     | SelfDestruct -> { model with CurrRoom = VictoryRoom } // TODO: implement check if allowed
-    | LeaveHyperspace -> { model with CurrRoom = AtPlanet; CurrPlanet = model.CurrPlanet + 1 }
+    | LeaveHyperspace ->
+        { model with
+              CurrRoom = AtPlanet
+              CurrPlanet = model.CurrPlanet + 1 }
