@@ -29,7 +29,7 @@ hyperspace.welcome,"We have entered Hyperspace.
 Your total galactic sterilisation count is {0}."
 
 hyperspace.commands,"You have following commands at your disposal:
-SelfDestruct, Visit Tech, Visit Perfection, Visit Thread, Visit Damage"
+SelfDestruct, Visit Tech, Visit Perfection, Visit Threat, Visit Damage"
 
 threatassessment.welcome,"Welcome to the Threat Assesment Center"
 threatassessment.nothreat,"not a threat"

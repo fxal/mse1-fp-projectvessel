@@ -79,7 +79,7 @@ let update (msg: Message) (model: State): State =
     | null -> ()
     | _ -> model.StarvedTimer.Dispose()
 
-    model.StarvedTimer <- new Timer(TimerCallback(fun _ -> starve model), null, 5000, 0)
+    model.StarvedTimer <- new Timer(TimerCallback(fun _ -> starve model), null, 500000, 0)
 
     match msg with
     | ConfirmEradication ->
