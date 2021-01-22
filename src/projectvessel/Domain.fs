@@ -18,6 +18,7 @@ type Room =
 type State =
     { KSRLevel: int
       DamageThreshold: int
+      DamageReceived: int
       Offset: int
       DamageDetected: bool
       CurrRoom: Room
@@ -36,8 +37,9 @@ type Message =
 
 let init planetMap (): State =
     { KSRLevel = 2
-      DamageThreshold = 10
-      Offset = 50
+      DamageThreshold = 100000
+      DamageReceived = 1000
+      Offset = 0
       DamageDetected = false
       CurrRoom = Start
       AllPlanets = planetMap
@@ -64,8 +66,11 @@ let leaveHyperspaceAllowed (model: State) =
     || model.CurrRoom = TechAss
 
 let selfDestructAllowed (model: State) =
-    model.CurrRoom = Hyperspace
+    let currentPlanet = model.AllPlanets.[string model.CurrPlanet]
+    model.CurrRoom = AtPlanet
     && model.DamageDetected = true
+    && model.KSRLevel > (currentPlanet.KSRLevel - model.Offset)
+
 
 let checkInput (model: State) (isAllowedCondition: State -> bool) (updatedModel: State) =
     match (isAllowedCondition model) with
@@ -73,21 +78,18 @@ let checkInput (model: State) (isAllowedCondition: State -> bool) (updatedModel:
     | false -> printfn "%s" (i18nNoParameters "nopermission"); model
 
 
-let goToVictoryRoom (model: State) =
+let starve (model: State) =
     model.StarvedTimer.Dispose()
-
-    printfn
-        "You Starved due to failing to follow commands. The Vessel Can now no longer fulfill it's directive and will self desctruct."
+    printfn "%s" (i18nNoParameters "starve")
 
 let update (msg: Message) (model: State): State =
 
-    (*
     match model.StarvedTimer with
     | null -> ()
     | _ -> model.StarvedTimer.Dispose()
 
-    model.StarvedTimer <- new Timer(TimerCallback(fun _ -> goToVictoryRoom model), null, 5000, 0)
-*)
+    model.StarvedTimer <- new Timer(TimerCallback(fun _ -> starve { model with CurrRoom = VictoryRoom }), null, 500000, 0)
+
     match msg with
     | ConfirmEradication ->
         checkInput
@@ -102,7 +104,7 @@ let update (msg: Message) (model: State): State =
                       + uint32
                           model.AllPlanets.[string model.CurrPlanet]
                               .PopulationCount
-                  CurrPlanet = model.CurrPlanet + 1
+                  CurrPlanet = if model.CurrPlanet > model.EradicatedPlanets.Length then 1 else model.CurrPlanet + 1
                   CurrRoom = Hyperspace }
 
     | Visit ass ->
@@ -125,5 +127,5 @@ let update (msg: Message) (model: State): State =
             | _ -> model
         else
             printfn "%s" (i18nNoParameters "nopermission"); model
-    | SelfDestruct -> checkInput model selfDestructAllowed { model with CurrRoom = VictoryRoom }
-    | LeaveHyperspace -> checkInput model leaveHyperspaceAllowed { model with CurrRoom = AtPlanet }
+    | SelfDestruct -> checkInput model selfDestructAllowed { model with CurrRoom = VictoryRoom } 
+    | LeaveHyperspace -> checkInput model leaveHyperspaceAllowed { model with CurrRoom = AtPlanet; DamageDetected = model.DamageThreshold < model.DamageReceived }

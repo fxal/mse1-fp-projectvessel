@@ -1,16 +1,21 @@
-﻿module projectvessel.GameText
+module projectvessel.GameText
 
 open CsvReader
 open Types
+open Domain
 
-let atPlanet (planet: Planet) =
+let atPlanet (planet: Planet) (state: State) =
     i18nWithParameters
         None
         "planet.info"
         [ string planet.PopulationCount
           planet.PopulationName
           planet.Description
-          string planet.KSRLevel ]
+          string planet.KSRLevel
+          if state.DamageDetected && state.KSRLevel > (planet.KSRLevel - state.Offset) then "a threat" else "no threat"
+          if state.DamageDetected then "damage" else "no damage"
+          if state.KSRLevel > (planet.KSRLevel - state.Offset) then "superior" else "inferior"
+          if state.DamageDetected && state.KSRLevel > (planet.KSRLevel - state.Offset) then (i18nNoParameters "planet.action.selfdestruct") else (i18nNoParameters "planet.action.eradicate")]
 
 let enteringHyperspace (planet: Planet) (eradicatedLifeforms: uint32) =
     i18nWithParameters
@@ -24,22 +29,23 @@ let enteringHyperspace (planet: Planet) (eradicatedLifeforms: uint32) =
     + "\n"
     + i18nNoParameters "hyperspace.commands"
 
-let enteringTechAss (ksrLevel: int) =
-    i18nWithParameters None "techassessment.welcome" [ string ksrLevel ]
+let enteringTechAss (state: State) =
+    i18nWithParameters None "techassessment.welcome" [ string state.KSRLevel ]
     + "\n"
     + i18nNoParameters "techassessment.explainkardashian"
+    + i18nWithParameters None "techassessment.calibrate" [ string state.Offset ]
     + "\n Type 'LeaveHyperspace' or 'Calibrate [number]'"
 
-let enteringDamageAss =
-    i18nWithParameters None "damageassessment.welcome" []
+let enteringDamageAss (state: State) =
+    i18nNoParameters "damageassessment.welcome" 
     + "\n"
-    + i18nNoParameters "damageassessment.explain"
-    + "\n Type 'LeaveHyperspace' or 'Calibrate [number]'"
+    + i18nWithParameters None "damageassessment.explain" [ string state.DamageThreshold ]
+    + "\nType 'LeaveHyperspace' or 'Calibrate [number]'"
 
 let enteringThreatAss =
     i18nNoParameters "threatassessment.welcome"
-    + "\n Type 'LeaveHyperspace'"
+    + "\nType 'LeaveHyperspace'"
 
 let enteringPerfectionAss =
     i18nNoParameters "perfectionassessment.welcome"
-    + "\n Type 'LeaveHyperspace'"
+    + "\nType 'LeaveHyperspace'"

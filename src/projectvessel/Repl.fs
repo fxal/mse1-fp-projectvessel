@@ -54,12 +54,12 @@ let evaluate (update: Domain.Message -> State -> State) (state: State) (msg: Mes
         let message =
             match newState.CurrRoom with
             | Hyperspace -> GameText.enteringHyperspace newState.EradicatedPlanets.Head newState.EradicatedLifeforms
-            | AtPlanet -> GameText.atPlanet newState.AllPlanets.[string state.CurrPlanet]
-            | TechAss -> GameText.enteringTechAss newState.KSRLevel
+            | AtPlanet -> GameText.atPlanet newState.AllPlanets.[string state.CurrPlanet] newState
+            | TechAss -> GameText.enteringTechAss newState
             | ThreatAss -> GameText.enteringThreatAss
-            | DamageAss -> GameText.enteringDamageAss
+            | DamageAss -> GameText.enteringDamageAss newState
             | PerfectionAss -> GameText.enteringPerfectionAss
-            | VictoryRoom -> "Game over"
+            | VictoryRoom -> i18nWithParameters None "gameover" [ string state.EradicatedLifeforms ]
             | _ -> sprintf "The message was %A. New state is %A" msg newState
 
         (newState, message)
@@ -71,7 +71,7 @@ let evaluate (update: Domain.Message -> State -> State) (state: State) (msg: Mes
             sprintf
                 """"%s" was not parsable. %s"""
                 originalInput
-                "You can get information about known commands by typing \"Help\""
+                "You can get information about known commands by reading the info text"
 
         (state, message)
 
