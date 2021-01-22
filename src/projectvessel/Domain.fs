@@ -4,6 +4,7 @@ open System.Threading
 open Types
 
 type Room =
+    | Start
     | Hyperspace
     | AtPlanet
     | VictoryRoom
@@ -35,11 +36,33 @@ let init planetMap (): State =
       DamageThreshold = 10
       Offset = 50
       DamageDetected = false
-      CurrRoom = AtPlanet
+      CurrRoom = Start
       AllPlanets = planetMap
-      CurrPlanet = 0
+      CurrPlanet = 1
       EradicatedPlanets = []
       StarvedTimer = null }
+
+
+// some state condition checks if entering a room is allowed ...
+let eradicationAllowed (model: State) = model.CurrRoom = AtPlanet
+
+let visitAllowed (model: State) = model.CurrRoom = Hyperspace
+
+let leaveHyperspaceAllowed (model: State) =
+    model.CurrRoom = Start
+    || model.CurrRoom = PerfectionAss
+    || model.CurrRoom = ThreadAss
+    || model.CurrRoom = DamageAss
+    || model.CurrRoom = TechAss
+
+let selfDestructAllowed (model: State) =
+    model.CurrRoom = Hyperspace
+    && model.DamageDetected = true
+
+let checkInput (model: State) (condition: State -> bool) (updatedModel: State) =
+    match (condition model) with
+    | true -> updatedModel
+    | false -> model
 
 
 let goToVictoryRoom (model: State) =
@@ -50,7 +73,6 @@ let goToVictoryRoom (model: State) =
 
 let update (msg: Message) (model: State): State =
 
-
     match model.StarvedTimer with
     | null -> ()
     | _ -> model.StarvedTimer.Dispose()
@@ -59,20 +81,25 @@ let update (msg: Message) (model: State): State =
 
     match msg with
     | ConfirmEradication ->
-        { model with
-              EradicatedPlanets =
-                  model.AllPlanets.[string model.CurrPlanet]
-                  :: model.EradicatedPlanets
-              CurrRoom = Hyperspace }
+        checkInput
+            model
+            eradicationAllowed
+            { model with
+                  EradicatedPlanets =
+                      model.AllPlanets.[string model.CurrPlanet]
+                      :: model.EradicatedPlanets
+                  CurrPlanet = model.CurrPlanet + 1
+                  CurrRoom = Hyperspace }
+
     | Visit ass ->
-        match ass with
-        | DamageAss -> { model with CurrRoom = DamageAss }
-        | PerfectionAss -> { model with CurrRoom = PerfectionAss }
-        | TechAss -> { model with CurrRoom = TechAss }
-        | ThreadAss -> { model with CurrRoom = ThreadAss }
-        | _ -> model
-    | SelfDestruct -> { model with CurrRoom = VictoryRoom } // TODO: implement check if allowed
-    | LeaveHyperspace ->
-        { model with
-              CurrRoom = AtPlanet
-              CurrPlanet = model.CurrPlanet + 1 }
+        if visitAllowed model then
+            match ass with
+            | DamageAss -> { model with CurrRoom = DamageAss }
+            | PerfectionAss -> { model with CurrRoom = PerfectionAss }
+            | TechAss -> { model with CurrRoom = TechAss }
+            | ThreadAss -> { model with CurrRoom = ThreadAss }
+            | _ -> model
+        else
+            model
+    | SelfDestruct -> checkInput model selfDestructAllowed { model with CurrRoom = VictoryRoom }
+    | LeaveHyperspace -> checkInput model leaveHyperspaceAllowed { model with CurrRoom = AtPlanet }
