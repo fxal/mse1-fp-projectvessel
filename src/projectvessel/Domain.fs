@@ -66,7 +66,9 @@ let leaveHyperspaceAllowed (model: State) =
     || model.CurrRoom = TechAss
 
 let selfDestructAllowed (model: State) =
-    let currentPlanet = model.AllPlanets.[string model.CurrPlanet]
+    let currentPlanet =
+        model.AllPlanets.[string model.CurrPlanet]
+
     model.CurrRoom = AtPlanet
     && model.DamageDetected = true
     && model.KSRLevel > (currentPlanet.KSRLevel - model.Offset)
@@ -75,7 +77,9 @@ let selfDestructAllowed (model: State) =
 let checkInput (model: State) (isAllowedCondition: State -> bool) (updatedModel: State) =
     match (isAllowedCondition model) with
     | true -> updatedModel
-    | false -> printfn "%s" (i18nNoParameters "nopermission"); model
+    | false ->
+        printfn "%s" (i18nNoParameters "nopermission")
+        model
 
 
 let starve (model: State) =
@@ -83,13 +87,14 @@ let starve (model: State) =
     printfn "%s" (i18nNoParameters "starve")
 
 let update (msg: Message) (model: State): State =
-
+    
     match model.StarvedTimer with
     | null -> ()
     | _ -> model.StarvedTimer.Dispose()
 
-    model.StarvedTimer <- new Timer(TimerCallback(fun _ -> starve { model with CurrRoom = VictoryRoom }), null, 500000, 0)
-
+    model.StarvedTimer <-
+        new Timer(TimerCallback(fun _ -> starve { model with CurrRoom = VictoryRoom }), null, 60000, 0)
+    
     match msg with
     | ConfirmEradication ->
         checkInput
@@ -104,7 +109,10 @@ let update (msg: Message) (model: State): State =
                       + uint32
                           model.AllPlanets.[string model.CurrPlanet]
                               .PopulationCount
-                  CurrPlanet = if model.CurrPlanet > model.EradicatedPlanets.Length then 1 else model.CurrPlanet + 1
+                  CurrPlanet =
+                      if model.CurrPlanet > model.AllPlanets.Count
+                      then 1
+                      else model.CurrPlanet + 1
                   CurrRoom = Hyperspace }
 
     | Visit ass ->
@@ -126,6 +134,13 @@ let update (msg: Message) (model: State): State =
                       DamageThreshold = numInput }
             | _ -> model
         else
-            printfn "%s" (i18nNoParameters "nopermission"); model
-    | SelfDestruct -> checkInput model selfDestructAllowed { model with CurrRoom = VictoryRoom } 
-    | LeaveHyperspace -> checkInput model leaveHyperspaceAllowed { model with CurrRoom = AtPlanet; DamageDetected = model.DamageThreshold < model.DamageReceived }
+            printfn "%s" (i18nNoParameters "nopermission")
+            model
+    | SelfDestruct -> checkInput model selfDestructAllowed { model with CurrRoom = VictoryRoom }
+    | LeaveHyperspace ->
+        checkInput
+            model
+            leaveHyperspaceAllowed
+            { model with
+                  CurrRoom = AtPlanet
+                  DamageDetected = model.DamageThreshold < model.DamageReceived }
