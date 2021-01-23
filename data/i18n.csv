@@ -6,8 +6,11 @@ welcometext,"I am Nomad. I am perfect. That which is imperfect must be sterilize
 You are on a spaceship in hyperspace.
 To investigate the first planet write 'LeaveHyperspace'..."
 
-lore,"You are an organic on board a Exploratory Vessel controlled by an AI. This AI does the assessment of planets to be harvested for resources and then destroyed on its own but always requires an organic to verify commands.
-One day the Vessel flies through an ion storm which messes up the systems making the AI change its directive now destroying all planets with life that it encounters. You as the Organic attendant on board must still verify the commands because otherwise the AI will stop dispensing food to you.
+lore,"You are an organic on board an exploratory vessel controlled by an AI. This AI does the assessment of planets 
+to be harvested for resources and then destroyed on its own but always requires an organic to verify commands.
+One day the Vessel flies through an ion storm which messes up the systems making the AI change its directive now 
+destroying all planets with life that it encounters. You as the Organic attendant on board must still verify the commands 
+because otherwise the AI will stop dispensing food to you.
 You now have to watch as the AI flies from system to system destroying all organic life just to keep getting fed by the AI.
 Your goal is to find a way to disable or destroy the AI by tricking its own systems."
 
@@ -19,10 +22,10 @@ A habitable planet in a previosly unknown solar system lies before us.
 The planet has a civilization of {0} {1}.
 {2}
 
-The Technology Assessment System has assigned them a Kardashian Scale Rating (KSR) of {3}.
-The Threat Assessment System has deemed them {4}.
-The Damage Assessment System reports {5} to the hull.
-The Perfection Assessment System has found them to be {6}.
+The Technology Assessment System:   Kardashian Scale Rating (KSR) of {3}.
+The Threat Assessment System:       {4}.
+The Damage Assessment System:       {5} to the hull.
+The Perfection Assessment System:   they found to be {6}.
 
 {7}"
 
@@ -46,7 +49,8 @@ threatassessment.threat,"a threat"
 techassessment.welcome,"Welcome to the Technology Assessment System.
 According to the kardashian scale our systems are at tech level {0}."
 
-techassessment.explainkardashian,"The kardashian scale defines a civilizations level of stupidity. The higher the value the less evolved the civilization is. 
+techassessment.explainkardashian,"The kardashian scale defines a civilizations level of stupidity. 
+The higher the value the less evolved the civilization is. 
 A typical developement of civilizations up to the information age is:
 
 |=    | (Hunters and gatherers)
@@ -90,5 +94,6 @@ nopermission,"You can not do this right now...try something else.
 starve,"You Starved due to failing to follow commands. The Vessel Can now no longer fulfill it's directive and will self desctruct."
 
 gameover,"Game over.
-You have won the game, the eradication of countless life forms by this ship was halted. You, of course , payed the ultimate price. Along with {0} other life forms in this galaxy.
+You have won the game, the eradication of countless life forms by this ship was halted. 
+You, of course, payed the ultimate price. Along with {0} other life forms in this galaxy.
 Good job though."
