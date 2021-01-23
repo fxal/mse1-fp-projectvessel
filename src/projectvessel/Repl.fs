@@ -10,7 +10,6 @@ open projectvessel
 
 type Message =
     | DomainMessage of Domain.Message
-    | HelpRequested
     | NotParsable of string
 
 type State = Domain.State
@@ -31,20 +30,7 @@ let read (input: string) =
     | Visit room -> Domain.Visit room |> DomainMessage
     | Calibrate numInput -> Domain.Calibrate numInput |> DomainMessage
     | LeaveHyperspace -> Domain.LeaveHyperspace |> DomainMessage
-    | Help -> HelpRequested
     | ParseFailed -> NotParsable input
-
-
-
-open Microsoft.FSharp.Reflection
-
-// TODO: change (as not all commands should be listed)
-let createHelpText (): string =
-    FSharpType.GetUnionCases typeof<Domain.Message>
-    |> Array.map (fun case -> case.Name)
-    |> Array.fold (fun prev curr -> prev + " " + curr) ""
-    |> (fun s -> s.Trim() |> sprintf "Known commands are: %s")
-
 
 let evaluate (update: Domain.Message -> State -> State) (state: State) (msg: Message) =
     match msg with
@@ -63,9 +49,6 @@ let evaluate (update: Domain.Message -> State -> State) (state: State) (msg: Mes
             | _ -> sprintf "The message was %A. New state is %A" msg newState
 
         (newState, message)
-    | HelpRequested ->
-        let message = createHelpText ()
-        (state, message)
     | NotParsable originalInput ->
         let message =
             sprintf
